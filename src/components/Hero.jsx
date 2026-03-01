@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { identity, assets } from '../constants/data';
-import { Download, Mail, MapPin, Linkedin, ArrowRight, GraduationCap } from 'lucide-react';
+import { Download, Mail, MapPin, Linkedin, ArrowRight, GraduationCap, Code } from 'lucide-react';
 
 const fadeUp = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
 

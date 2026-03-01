@@ -40,7 +40,12 @@ const ProjectCard = ({ project, index }) => {
                 <div className="flex justify-between items-start mb-6">
                     <div className="flex items-center gap-3">
                         <div className="p-3 rounded-xl bg-indigo-500/10 text-[var(--accent)] border border-indigo-500/20 group-hover:scale-110 transition-transform">
-                            {project.icon ? <project.icon size={24} /> : <Cpu size={24} />}
+                            {project.icon ? (
+                                (() => {
+                                    const IconComponent = project.icon;
+                                    return <IconComponent size={24} />;
+                                })()
+                            ) : <Cpu size={24} />}
                         </div>
                         <div>
                             <span className="text-[10px] font-bold text-[var(--accent)] tracking-[0.2em] uppercase mb-1 block">
