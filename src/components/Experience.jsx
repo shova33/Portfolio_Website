@@ -2,82 +2,71 @@ import { motion } from 'framer-motion';
 import { experience } from '../constants/data';
 import { Briefcase, Calendar, ExternalLink } from 'lucide-react';
 
-const ACCENT = '#7C3AED';
-const ACCENT_D = '#5B21B6';
-const ACCENT_L = '#EDE9FE';
-const TEXT = '#0F172A';
-const TEXT2 = '#475569';
-const BORDER = '#E2E8F0';
-
 const fadeUp = (delay = 0) => ({
-    initial: { opacity: 0, y: 24 },
+    initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true },
-    transition: { duration: 0.48, delay, ease: 'easeOut' },
+    transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] },
 });
 
 const Experience = () => (
-    <section id="experience" className="section" style={{ borderTop: '1px solid #E2E8F0' }}>
+    <section id="experience" className="section bg-[var(--bg)]">
         <div className="container">
 
-            {/* Heading */}
             <motion.div {...fadeUp()}>
-                <span className="section-label">
-                    <Briefcase size={11} /> Career
-                </span>
-                <h2 className="section-title-lg">Experience</h2>
+                <span className="section-label">Career Journey</span>
+                <h2 className="section-title">Professional Experience</h2>
                 <div className="section-bar" />
             </motion.div>
 
-            {/* Experience cards */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div className="flex flex-col gap-6">
                 {experience.map((item, i) => {
                     const Icon = item.icon;
                     return (
                         <motion.div
                             key={item.id}
                             {...fadeUp(i * 0.1)}
-                            className="card card-accent-left"
-                            style={{ padding: '28px', display: 'flex', gap: 22, alignItems: 'flex-start' }}
+                            className="group card p-8 flex flex-col md:flex-row gap-8 items-start hover:border-[var(--accent)] transition-all"
                         >
-                            {/* Logo / Icon container */}
-                            <div style={{ width: 56, height: 56, borderRadius: 14, background: `linear-gradient(135deg, ${ACCENT_L}, #DDD6FE)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden', border: `1px solid ${BORDER}` }}>
-                                {item.image ? (
-                                    <img
-                                        src={item.image}
-                                        alt={item.company}
-                                        style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '8px' }}
-                                        onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }}
-                                    />
-                                ) : null}
-                                <div style={{ display: item.image ? 'none' : 'flex', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Icon size={22} style={{ color: ACCENT }} />
+                            {/* Visual Asset / Icon */}
+                            <div className="relative group-hover:scale-105 transition-transform duration-500">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-[var(--accent)] to-indigo-500 rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity" />
+                                <div className="relative w-16 h-16 rounded-xl bg-[var(--bg-alt)] border border-[var(--border-2)] flex items-center justify-center overflow-hidden">
+                                    {item.image ? (
+                                        <img
+                                            src={item.image}
+                                            alt={item.company}
+                                            className="w-10 h-10 object-contain grayscale group-hover:grayscale-0 transition-all"
+                                            onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }}
+                                        />
+                                    ) : null}
+                                    <div className="hidden w-full h-full items-center justify-center text-[var(--accent)]">
+                                        <Icon size={24} />
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* Content */}
-                            <div style={{ flex: 1 }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8, marginBottom: 6 }}>
+                            {/* Content Block */}
+                            <div className="flex-1 w-full">
+                                <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
                                     <div>
-                                        <h3 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 18, fontWeight: 700, color: TEXT, marginBottom: 3 }}>
+                                        <h3 className="text-xl font-bold mb-1 group-hover:text-[var(--accent)] transition-colors">
                                             {item.role}
                                         </h3>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                            <p style={{ fontSize: 14, fontWeight: 600, color: ACCENT }}>
-                                                {item.company}
-                                            </p>
+                                        <div className="flex items-center gap-2 text-[var(--accent)] font-bold text-sm">
+                                            {item.company}
                                             {item.link && item.link !== '#' && (
-                                                <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ color: '#94A3B8', display: 'flex' }} onMouseEnter={e => e.currentTarget.style.color = ACCENT} onMouseLeave={e => e.currentTarget.style.color = '#94A3B8'}>
+                                                <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">
                                                     <ExternalLink size={14} />
                                                 </a>
                                             )}
                                         </div>
                                     </div>
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600, color: ACCENT, backgroundColor: ACCENT_L, padding: '5px 14px', borderRadius: 99, whiteSpace: 'nowrap', border: `1px solid ${ACCENT}22` }}>
-                                        <Calendar size={12} /> {item.period}
-                                    </span>
+                                    <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-l)] border border-[var(--border)] text-[var(--accent)] text-xs font-bold tracking-wider">
+                                        <Calendar size={12} /> {item.period.toUpperCase()}
+                                    </div>
                                 </div>
-                                <p style={{ fontSize: 15, color: TEXT2, lineHeight: 1.75, marginTop: 12 }}>
+                                <p className="text-[var(--text2)] text-base leading-relaxed">
                                     {item.description}
                                 </p>
                             </div>

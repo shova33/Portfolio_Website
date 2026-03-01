@@ -10,7 +10,7 @@ import './index.css';
 
 function App() {
   return (
-    <div style={{ backgroundColor: '#FAFAFA', color: '#0F172A' }}>
+    <div className="bg-[var(--bg)] text-[var(--text)] min-h-screen">
       <Navbar />
       <main>
         <Hero />       {/* PRIMARY – full height, max visual impact  */}

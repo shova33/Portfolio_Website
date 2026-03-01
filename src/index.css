@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Poppins:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
 *,
@@ -10,23 +10,23 @@
 }
 
 :root {
-  --bg: #FAFAFA;
-  --bg-alt: #F5F3FF;
-  --card: #FFFFFF;
-  --border: #EDE9FE;
-  --border-2: #E2E8F0;
-  --accent: #7C3AED;
-  --accent-d: #5B21B6;
-  --accent-l: #EDE9FE;
-  --accent-m: #DDD6FE;
-  --text: #0F172A;
-  --text2: #475569;
-  --muted: #94A3B8;
-  --shadow-sm: 0 1px 6px rgba(124, 58, 237, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 20px rgba(124, 58, 237, 0.09), 0 2px 6px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 12px 40px rgba(124, 58, 237, 0.13), 0 4px 12px rgba(0, 0, 0, 0.07);
-  --radius: 14px;
-  --radius-lg: 20px;
+  --bg: #0B0E14;
+  --bg-alt: #131720;
+  --card: #1C212C;
+  --border: rgba(99, 102, 241, 0.2);
+  --border-2: rgba(255, 255, 255, 0.05);
+  --accent: #6366F1;
+  --accent-d: #4F46E5;
+  --accent-l: rgba(99, 102, 241, 0.15);
+  --accent-m: rgba(99, 102, 241, 0.3);
+  --text: #F9FAFB;
+  --text2: #9CA3AF;
+  --muted: #4B5563;
+  --shadow-sm: 0 1px 6px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.5);
+  --radius: 16px;
+  --radius-lg: 24px;
 }
 
 html {
@@ -45,61 +45,112 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
   line-height: 1.2;
 }
 
 /* ── Layout helpers ──────────────────────────────────────── */
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
 .section {
-  padding: 80px 0;
+  padding: 100px 0;
 }
 
 .section-alt {
   background-color: var(--bg-alt);
 }
 
+/* ── Bento Grid ─────────────────────────────────────────── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(150px, auto);
+  gap: 20px;
+}
+
+.bento-span-2 {
+  grid-column: span 2;
+}
+
+.bento-span-3 {
+  grid-column: span 3;
+}
+
+.bento-row-2 {
+  grid-row: span 2;
+}
+
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-span-2,
+  .bento-span-3 {
+    grid-column: span 1;
+  }
+}
+
+/* ── Glassmorphism ──────────────────────────────────────── */
+.glass {
+  background: rgba(28, 33, 44, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-2);
+}
+
+.glass-accent {
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid var(--border);
+}
+
 /* ── Typography helpers ──────────────────────────────────── */
 .section-label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
+  gap: 8px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
   background: var(--accent-l);
-  padding: 4px 14px;
+  padding: 6px 16px;
   border-radius: 99px;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
 .section-title {
-  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .section-title-lg {
-  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 800;
   color: var(--text);
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  letter-spacing: -0.02em;
 }
 
 .section-bar {
-  width: 48px;
-  height: 3px;
+  width: 60px;
+  height: 4px;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--accent), #a78bfa);
-  margin-bottom: 44px;
+  background: linear-gradient(90deg, var(--accent), #818CF8);
+  margin-bottom: 50px;
 }
 
 /* ── Card ────────────────────────────────────────────────── */
@@ -108,13 +159,29 @@ h4 {
   border: 1px solid var(--border-2);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.22s ease, transform 0.22s ease, border-color 0.22s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, var(--accent-m), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
   border-color: var(--border);
-  transform: translateY(-3px);
+  transform: translateY(-5px);
+}
+
+.card:hover::after {
+  opacity: 0.1;
 }
 
 .card-flat {
@@ -123,22 +190,24 @@ h4 {
   border-radius: var(--radius);
 }
 
-/* ── Accent card (PRIMARY sections) ─────────────────────── */
-.card-accent-left {
-  border-left: 3px solid var(--accent);
-}
-
 /* ── Tags & pills ────────────────────────────────────────── */
 .tag {
   display: inline-block;
   font-size: 11px;
   font-weight: 600;
-  padding: 4px 11px;
+  padding: 6px 12px;
   border-radius: 99px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+}
+
+.tag:hover {
   background: var(--accent-l);
-  color: var(--accent-d);
-  border: 1px solid var(--border);
-  letter-spacing: 0.03em;
+  color: var(--accent);
+  border-color: var(--border);
 }
 
 .tag-gray {
@@ -207,4 +276,8 @@ h4 {
   border-color: var(--accent);
   color: var(--accent);
   background: var(--accent-l);
+}
+
+.grid-cols-16 {
+  grid-template-columns: repeat(16, minmax(0, 1fr));
 }

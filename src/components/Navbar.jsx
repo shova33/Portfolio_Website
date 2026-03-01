@@ -18,67 +18,44 @@ const Navbar = () => {
         { name: 'Community', href: '#community' },
     ];
 
-    const navStyle = {
-        position: 'fixed', top: 0, width: '100%', zIndex: 100,
-        backgroundColor: isScrolled ? 'rgba(250,250,250,0.95)' : 'rgba(250,250,250,0)',
-        backdropFilter: isScrolled ? 'blur(12px)' : 'none',
-        borderBottom: isScrolled ? '1px solid #E8E4F8' : 'none',
-        transition: 'all 0.3s ease',
-    };
-
     return (
-        <nav style={navStyle}>
-            <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
+        <nav className={`fixed top-0 w-full z-[100] transition-all duration-300 ${isScrolled ? 'glass py-4 shadow-xl' : 'bg-transparent py-6'}`}>
+            <div className="container flex items-center justify-between">
                 {/* Logo */}
-                <a href="#about" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, fontSize: 18, color: '#5B21B6', textDecoration: 'none', letterSpacing: '-0.3px' }}>
-                    Shova<span style={{ color: '#0F172A' }}>.</span>
+                <a href="#about" className="text-2xl font-black tracking-tighter hover:scale-105 transition-transform">
+                    <span className="text-[var(--accent)]">S</span>
+                    <span className="text-[var(--text)]">HOVA</span>
+                    <span className="text-[var(--accent)]">.</span>
                 </a>
 
                 {/* Desktop nav */}
-                <div className="hidden md:flex" style={{ alignItems: 'center', gap: 36 }}>
+                <div className="hidden md:flex items-center gap-10">
                     {links.map(l => (
-                        <a key={l.name} href={l.href} style={{
-                            fontFamily: "'Inter', sans-serif", fontSize: 14, fontWeight: 500,
-                            color: '#475569', textDecoration: 'none', transition: 'color 0.2s',
-                        }}
-                            onMouseEnter={e => e.currentTarget.style.color = '#7C3AED'}
-                            onMouseLeave={e => e.currentTarget.style.color = '#475569'}>
+                        <a key={l.name} href={l.href} className="text-sm font-semibold text-[var(--text2)] hover:text-[var(--accent)] transition-colors tracking-wide uppercase">
                             {l.name}
                         </a>
                     ))}
-                    <a href="#contact" style={{
-                        fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600,
-                        padding: '9px 22px', borderRadius: 8,
-                        background: 'linear-gradient(135deg, #7C3AED, #5B21B6)',
-                        color: '#fff', textDecoration: 'none',
-                        boxShadow: '0 2px 10px rgba(124,58,237,0.25)',
-                        transition: 'opacity 0.2s',
-                    }}
-                        onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
-                        onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
-                        Contact Me
+                    <a href="#contact" className="px-6 py-2.5 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-d)] text-white text-xs font-bold uppercase tracking-widest transition-all shadow-lg shadow-indigo-500/20">
+                        Connect
                     </a>
                 </div>
 
                 {/* Mobile toggle */}
-                <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#5B21B6', padding: 4 }}>
-                    {isOpen ? <X size={22} /> : <Menu size={22} />}
+                <button className="md:hidden text-[var(--accent)] p-2" onClick={() => setIsOpen(!isOpen)}>
+                    {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
             </div>
 
             {/* Mobile menu */}
             {isOpen && (
-                <div style={{ backgroundColor: '#FAFAFA', borderBottom: '1px solid #E8E4F8', padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 18 }}>
+                <div className="md:hidden absolute top-full left-0 w-full glass border-t border-[var(--border-2)] p-6 flex flex-col gap-6 shadow-2xl animate-in slide-in-from-top-4 duration-300">
                     {links.map(l => (
-                        <a key={l.name} href={l.href} onClick={() => setIsOpen(false)}
-                            style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 500, color: '#0F172A', textDecoration: 'none' }}>
+                        <a key={l.name} href={l.href} onClick={() => setIsOpen(false)} className="text-lg font-bold text-[var(--text)] hover:text-[var(--accent)] transition-colors">
                             {l.name}
                         </a>
                     ))}
-                    <a href="#contact" onClick={() => setIsOpen(false)}
-                        style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, fontWeight: 600, padding: '11px', borderRadius: 8, background: 'linear-gradient(135deg, #7C3AED, #5B21B6)', color: '#fff', textDecoration: 'none', textAlign: 'center' }}>
-                        Contact Me
+                    <a href="#contact" onClick={() => setIsOpen(false)} className="w-full py-4 rounded-xl bg-[var(--accent)] text-white text-center font-black uppercase tracking-widest">
+                        Connect
                     </a>
                 </div>
             )}

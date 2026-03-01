@@ -2,115 +2,117 @@ import { motion } from 'framer-motion';
 import { identity, assets } from '../constants/data';
 import { Download, Mail, MapPin, Linkedin, ArrowRight } from 'lucide-react';
 
-const ACCENT = '#7C3AED';
-const ACCENT_D = '#5B21B6';
-const ACCENT_L = '#EDE9FE';
-const TEXT = '#0F172A';
-const TEXT2 = '#475569';
-const BORDER = '#E8E4F8';
-
-const fadeUp = { initial: { opacity: 0, y: 28 }, animate: { opacity: 1, y: 0 } };
+const fadeUp = { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 } };
 
 const Hero = () => (
-    <section id="about" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: 80, paddingBottom: 64, backgroundColor: '#FAFAFA' }}>
-        <div className="container" style={{ width: '100%' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 56, alignItems: 'center' }}>
+    <section id="about" className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+        {/* Immersive Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+            <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,_var(--accent-l)_0%,_transparent_70%)] opacity-40" />
+            <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,_rgba(99,102,241,0.05)_0%,_transparent_70%)] opacity-30" />
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-[0.03]" />
+        </div>
 
-                {/* Text */}
-                <motion.div {...fadeUp} transition={{ duration: 0.55, ease: 'easeOut' }}>
+        <div className="container relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-center">
 
-                    {/* Label pill */}
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, backgroundColor: ACCENT_L, color: ACCENT, borderRadius: 99, padding: '5px 14px', fontSize: 12, fontWeight: 600, marginBottom: 20, fontFamily: "'Inter', sans-serif", letterSpacing: '0.04em' }}>
-                        <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: ACCENT, display: 'inline-block', animation: 'pulse 2s infinite' }} />
-                        Open to internship opportunities
+                {/* Text Content */}
+                <motion.div
+                    {...fadeUp}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    {/* Status Pill */}
+                    <div className="section-label mb-6">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                        </span>
+                        Advancing Human-Centric AI
                     </div>
 
-                    <h1 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 'clamp(2.4rem, 6vw, 4.2rem)', fontWeight: 800, color: TEXT, lineHeight: 1.08, marginBottom: 10 }}>
+                    <h1 className="section-title-lg !mb-4">
                         {identity.name}
                     </h1>
 
-                    <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: 'clamp(1rem, 2.5vw, 1.35rem)', fontWeight: 600, marginBottom: 6, background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT_D})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                        {identity.title} · {identity.subtitle}
+                    <p className="text-xl md:text-2xl font-semibold mb-6 tracking-tight">
+                        <span className="text-white opacity-90">{identity.title}</span>
+                        <span className="mx-2 text-[var(--accent)]">•</span>
+                        <span className="text-[var(--accent)]">{identity.subtitle}</span>
                     </p>
 
-                    <p style={{ fontSize: 14, color: TEXT2, marginBottom: 28, display: 'flex', alignItems: 'center', gap: 5 }}>
-                        <MapPin size={13} /> {identity.location}
-                    </p>
+                    <div className="flex items-center gap-2 text-[var(--text2)] text-sm mb-8">
+                        <MapPin size={14} className="text-[var(--accent)]" />
+                        {identity.location}
+                    </div>
 
-                    <p style={{ fontSize: 15.5, color: TEXT2, lineHeight: 1.8, maxWidth: 580, marginBottom: 36 }}>
+                    <p className="text-lg text-[var(--text2)] leading-relaxed max-w-2xl mb-10">
                         {identity.about}
                     </p>
 
-                    {/* Contact pills */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 36 }}>
+                    {/* Social/Contact Links */}
+                    <div className="flex flex-wrap gap-3 mb-12">
                         {[
                             { icon: Mail, label: identity.email, href: `mailto:${identity.email}` },
-                            { icon: Linkedin, label: identity.linkedin, href: identity.linkedinUrl },
+                            { icon: Linkedin, label: "LinkedIn", href: identity.linkedinUrl },
                         ].map(({ icon: Icon, label, href }) => (
-                            <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                                style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '8px 16px', border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 13, fontWeight: 500, color: TEXT2, textDecoration: 'none', backgroundColor: '#fff', transition: 'all 0.2s' }}
-                                onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; e.currentTarget.style.backgroundColor = ACCENT_L; }}
-                                onMouseLeave={e => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.color = TEXT2; e.currentTarget.style.backgroundColor = '#fff'; }}>
-                                <Icon size={13} /> {label}
+                            <a
+                                key={label}
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="glass hover:glass-accent flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-medium text-[var(--text2)] hover:text-[var(--accent)] border border-[var(--border-2)] hover:border-[var(--border)] transition-all duration-300"
+                            >
+                                <Icon size={14} /> {label}
                             </a>
                         ))}
                     </div>
 
                     {/* CTAs */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-                        <a href="#projects" style={{
-                            display: 'flex', alignItems: 'center', gap: 8,
-                            padding: '13px 28px', borderRadius: 10,
-                            background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT_D})`,
-                            color: '#fff', fontWeight: 600, fontSize: 14, fontFamily: "'Inter', sans-serif",
-                            textDecoration: 'none', boxShadow: '0 4px 16px rgba(124,58,237,0.28)',
-                            transition: 'opacity 0.2s',
-                        }}
-                            onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
-                            onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
-                            View Projects <ArrowRight size={15} />
+                    <div className="flex flex-wrap gap-4">
+                        <a
+                            href="#projects"
+                            className="flex items-center gap-2 px-8 py-4 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-d)] text-white font-bold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-1"
+                        >
+                            Explore Journey <ArrowRight size={16} />
                         </a>
-                        <a href={assets.resumeUrl} target="_blank" rel="noopener noreferrer" style={{
-                            display: 'flex', alignItems: 'center', gap: 8,
-                            padding: '13px 28px', borderRadius: 10,
-                            border: `1.5px solid ${BORDER}`, backgroundColor: '#fff',
-                            color: TEXT, fontWeight: 600, fontSize: 14, fontFamily: "'Inter', sans-serif",
-                            textDecoration: 'none', transition: 'all 0.2s',
-                        }}
-                            onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-                            onMouseLeave={e => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.color = TEXT; }}>
-                            <Download size={15} /> Download CV
+                        <a
+                            href={assets.resumeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-8 py-4 rounded-xl glass border border-[var(--border-2)] hover:border-[var(--accent)] text-[var(--text)] font-bold text-sm transition-all duration-300 hover:-translate-y-1"
+                        >
+                            <Download size={16} /> Technical Resume
                         </a>
                     </div>
                 </motion.div>
 
-                {/* Photo */}
+                {/* Profile Visual */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.92 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="hidden md:block"
-                    style={{ width: 260, height: 320, flexShrink: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative hidden md:block"
                 >
-                    <div style={{ width: '100%', height: '100%', borderRadius: 20, overflow: 'hidden', border: `1.5px solid ${BORDER}`, backgroundColor: ACCENT_L, position: 'relative', boxShadow: '0 16px 48px rgba(124,58,237,0.12)' }}>
-                        {/* Decorative corner dot */}
-                        <div style={{ position: 'absolute', top: 16, right: 16, width: 10, height: 10, borderRadius: '50%', backgroundColor: ACCENT, opacity: 0.7 }} />
+                    {/* Decorative Rings */}
+                    <div className="absolute -inset-4 border border-[var(--border)] rounded-[32px] opacity-20 animate-[spin_20s_linear_infinite] pointer-events-none" />
+                    <div className="absolute -inset-8 border border-[var(--accent-l)] rounded-[40px] opacity-10 animate-[spin_30s_linear_infinite_reverse] pointer-events-none" />
+
+                    <div className="relative w-72 h-96 rounded-3xl overflow-hidden glass border-2 border-[var(--border)] shadow-2xl">
                         <img
                             src={assets.profilePhoto}
                             alt={identity.name}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+                            className="w-full h-full object-cover object-top grayscale-[20%] hover:grayscale-0 transition-all duration-700"
                             onError={e => {
                                 e.target.style.display = 'none';
-                                e.target.parentElement.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:800;font-family:'Poppins',sans-serif;color:#7C3AED;background:linear-gradient(135deg,#F5F3FF,#EDE9FE)">SG</div>`;
+                                e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center text-7xl font-black text-[var(--accent)] bg-gradient-to-br from-[var(--card)] to-[var(--bg-alt)]">SG</div>`;
                             }}
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)]/60 to-transparent pointer-events-none" />
                     </div>
                 </motion.div>
+
             </div>
         </div>
-
-        {/* Decorative gradient blob */}
-        <div style={{ position: 'absolute', top: 60, right: '10%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }} />
     </section>
 );
 

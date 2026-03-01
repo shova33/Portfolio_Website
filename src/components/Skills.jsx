@@ -1,174 +1,263 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { skills, education, certifications } from '../constants/data';
-import { CheckCircle, ChevronDown, Award, ExternalLink, GraduationCap, Image as ImageIcon } from 'lucide-react';
+import { Award, ExternalLink, GraduationCap, Code, Zap, Brain, Activity } from 'lucide-react';
 
-const ACCENT = '#7C3AED';
-const ACCENT_D = '#5B21B6';
-const ACCENT_L = '#EDE9FE';
-const TEXT = '#0F172A';
-const TEXT2 = '#475569';
-const BORDER = '#E2E8F0';
+const SkillGauge = ({ level = 85, label }) => (
+    <div className="group relative">
+        <div className="flex justify-between items-end mb-2">
+            <span className="text-xs font-bold text-[var(--text2)] group-hover:text-[var(--accent)] transition-colors">{label}</span>
+            <span className="text-[10px] font-mono text-[var(--muted)]">{level}%</span>
+        </div>
+        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+            <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${level}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="h-full bg-gradient-to-r from-[var(--accent)] to-indigo-400 group-hover:from-indigo-400 group-hover:to-[var(--accent)] transition-all"
+            />
+        </div>
+    </div>
+);
 
-// ── Collapsible skill group card ──────────────────────────────
-const SkillGroup = ({ group, defaultOpen = false, delay = 0 }) => {
-    const [open, setOpen] = useState(defaultOpen);
+const RadarChart = () => {
+    const stats = [
+        { label: 'Deep Learning', value: 92 },
+        { label: 'ML Logic', value: 88 },
+        { label: 'Audio DSP', value: 84 },
+        { label: 'Feature Eng', value: 86 },
+        { label: 'Python/Dev', value: 95 }
+    ];
+
+    const size = 200;
+    const center = size / 2;
+    const radius = 70;
+    const angleStep = (Math.PI * 2) / stats.length;
+
+    const points = stats.map((s, i) => {
+        const x = center + radius * (s.value / 100) * Math.cos(i * angleStep - Math.PI / 2);
+        const y = center + radius * (s.value / 100) * Math.sin(i * angleStep - Math.PI / 2);
+        return `${x},${y}`;
+    }).join(' ');
+
+    const bgPoints = [100, 75, 50, 25].map(level => {
+        return stats.map((_, i) => {
+            const x = center + radius * (level / 100) * Math.cos(i * angleStep - Math.PI / 2);
+            const y = center + radius * (level / 100) * Math.sin(i * angleStep - Math.PI / 2);
+            return `${x},${y}`;
+        }).join(' ');
+    });
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.42, delay }}
-            className="card"
-            style={{ overflow: 'hidden' }}
-        >
-            <button
-                onClick={() => setOpen(!open)}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 22px', background: 'none', border: 'none', cursor: 'pointer', gap: 12 }}
-            >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: open ? ACCENT : '#CBD5E1', transition: 'background-color 0.3s' }} />
-                    <h4 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 14, fontWeight: 700, color: open ? ACCENT_D : TEXT, textAlign: 'left', letterSpacing: '0.01em', transition: 'color 0.3s' }}>
-                        {group.category}
-                    </h4>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 11, color: '#94A3B8', fontWeight: 500 }}>{group.items.length} skills</span>
-                    <div style={{
-                        width: 24, height: 24, borderRadius: 6, backgroundColor: open ? ACCENT_L : '#F8FAFC',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        transition: 'all 0.3s',
-                        transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
-                    }}>
-                        <ChevronDown size={14} style={{ color: open ? ACCENT : '#94A3B8' }} />
-                    </div>
-                </div>
-            </button>
+        <div className="flex flex-col items-center justify-center h-full min-h-[220px]">
+            <svg width={size} height={size} className="overflow-visible">
+                {/* Background Polygons */}
+                {bgPoints.map((p, i) => (
+                    <polygon key={i} points={p} fill="none" stroke="var(--border-2)" strokeWidth="1" strokeDasharray="2 2" />
+                ))}
 
-            <AnimatePresence initial={false}>
-                {open && (
-                    <motion.div
-                        key="content"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.32, ease: 'easeInOut' }}
-                        style={{ overflow: 'hidden' }}
-                    >
-                        <div style={{ padding: '4px 22px 20px', display: 'flex', flexWrap: 'wrap', gap: 7, borderTop: `1px solid ${BORDER}` }}>
-                            {group.items.map((item, i) => (
-                                <span key={i} className="tag">{item}</span>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.div>
+                {/* Axes */}
+                {stats.map((_, i) => {
+                    const x = center + radius * Math.cos(i * angleStep - Math.PI / 2);
+                    const y = center + radius * Math.sin(i * angleStep - Math.PI / 2);
+                    return <line key={i} x1={center} y1={center} x2={x} y2={y} stroke="var(--border-2)" strokeWidth="1" />;
+                })}
+
+                {/* Data Polygon */}
+                <motion.polygon
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    points={points}
+                    fill="rgba(99, 102, 241, 0.2)"
+                    stroke="var(--accent)"
+                    strokeWidth="2"
+                    className="origin-center"
+                />
+
+                {/* Labels */}
+                {stats.map((s, i) => {
+                    const x = center + (radius + 20) * Math.cos(i * angleStep - Math.PI / 2);
+                    const y = center + (radius + 15) * Math.sin(i * angleStep - Math.PI / 2);
+                    return (
+                        <text key={i} x={x} y={y} textAnchor="middle" fontSize="8" fontWeight="bold" fill="var(--muted)" className="uppercase tracking-tighter">
+                            {s.label}
+                        </text>
+                    );
+                })}
+            </svg>
+        </div>
     );
 };
 
 const Skills = () => (
-    <section id="skills" className="section" style={{ borderTop: '1px solid #E2E8F0' }}>
+    <section id="skills" className="section bg-[var(--bg-alt)]/30">
         <div className="container">
 
             <motion.div
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.48 }}
+                className="mb-16"
             >
                 <span className="section-label">Background</span>
-                <h2 className="section-title">Skills &amp; Education</h2>
+                <h2 className="section-title">Technical Expertise</h2>
                 <div className="section-bar" />
             </motion.div>
 
-            {/* Education card */}
-            <div style={{ marginBottom: 40 }}>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#94A3B8', marginBottom: 14 }}>Education</p>
-                {education.map((edu, i) => (
-                    <motion.div key={edu.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.42, delay: i * 0.07 }}
-                        className="card card-accent-left"
-                        style={{ padding: '22px 24px', display: 'flex', gap: 16, alignItems: 'center', marginBottom: 10 }}
-                    >
-                        {/* Logo / Icon */}
-                        <div style={{ width: 44, height: 44, borderRadius: 10, background: ACCENT_L, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `1px solid ${BORDER}`, overflow: 'hidden' }}>
-                            {edu.image ? (
-                                <img src={edu.image} alt={edu.institution} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }} />
-                            ) : null}
-                            <div style={{ display: edu.image ? 'none' : 'flex', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                <GraduationCap size={18} style={{ color: ACCENT }} />
-                            </div>
-                        </div>
+            <div className="bento-grid">
 
-                        <div style={{ flex: 1 }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}>
-                                <div>
-                                    <h4 style={{ fontFamily: "'Poppins', sans-serif", fontSize: 16, fontWeight: 700, color: TEXT, marginBottom: 5 }}>{edu.degree}</h4>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                        <p style={{ fontSize: 14, color: ACCENT, fontWeight: 600 }}>{edu.institution}</p>
-                                        {edu.link && edu.link !== '#' && (
-                                            <a href={edu.link} target="_blank" rel="noopener noreferrer" style={{ color: '#94A3B8' }} onMouseEnter={e => e.currentTarget.style.color = ACCENT} onMouseLeave={e => e.currentTarget.style.color = '#94A3B8'}>
-                                                <ExternalLink size={12} />
-                                            </a>
-                                        )}
-                                    </div>
-                                    <p style={{ fontSize: 13, color: TEXT2, marginTop: 4 }}>{edu.location} · {edu.description}</p>
+                {/* 111 Days of Code - Heatmap Box */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="bento-span-2 bento-row-2 card glass p-8 flex flex-col"
+                >
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="p-3 rounded-xl bg-indigo-500/10 text-[var(--accent)] border border-indigo-500/20">
+                            <Activity size={24} />
+                        </div>
+                        <h3 className="text-xl font-bold">Commitment Node</h3>
+                    </div>
+
+                    <p className="text-[var(--text2)] text-sm mb-8 leading-relaxed">
+                        Visualizing the <span className="text-[var(--accent)] font-bold">111 Days of Code</span> initiative.
+                        A consistent record of signal generation across the technical spectrum.
+                    </p>
+
+                    <div className="flex flex-col gap-4 mt-auto">
+                        <div className="grid grid-cols-16 gap-1 w-full aspect-[16/7]">
+                            {Array.from({ length: 112 }).map((_, i) => {
+                                // Randomize intensity for heatmap effect
+                                const intensities = [0.1, 0.3, 0.6, 0.9];
+                                const intensity = intensities[Math.floor(Math.random() * intensities.length)];
+                                return (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ opacity: 0 }}
+                                        whileInView={{ opacity: intensity }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: i * 0.005 }}
+                                        className="bg-[var(--accent)] rounded-[1px] w-full h-full cursor-help hover:scale-150 transition-transform relative group/day shadow-sm"
+                                        title={`Day ${i + 1}: ${Math.floor(intensity * 100)}% Activity`}
+                                    >
+                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 p-1.5 bg-[var(--card)] border border-[var(--border-2)] rounded text-[8px] font-bold opacity-0 group-hover/day:opacity-100 whitespace-nowrap z-10 pointer-events-none">
+                                            DAY {i + 1}
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+                        <div className="flex items-center justify-between text-[10px] font-bold text-[var(--muted)] pt-2 border-t border-[var(--border-2)]">
+                            <div className="flex items-center gap-2">
+                                <span>LESS</span>
+                                <div className="flex gap-1">
+                                    {[0.1, 0.3, 0.6, 0.9].map(o => (
+                                        <div key={o} className="w-2 h-2 rounded-[1px] bg-[var(--accent)]" style={{ opacity: o }} />
+                                    ))}
                                 </div>
-                                <span style={{ fontSize: 12, fontWeight: 600, color: ACCENT, backgroundColor: ACCENT_L, padding: '5px 14px', borderRadius: 99, whiteSpace: 'nowrap', border: `1px solid ${ACCENT}22` }}>
-                                    {edu.period}
-                                </span>
+                                <span>MORE</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-[var(--accent)]">
+                                <Zap size={10} fill="currentColor" /> 100% STREAK
                             </div>
                         </div>
-                    </motion.div>
-                ))}
-            </div>
+                    </div>
+                </motion.div>
 
-            {/* Skills — collapsible groups */}
-            <div style={{ marginBottom: 40 }}>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#94A3B8', marginBottom: 14 }}>
-                    Technical Skills <span style={{ fontSize: 10, color: '#CBD5E1', fontWeight: 500 }}> — click to expand</span>
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 10 }}>
-                    {skills.map((group, i) => (
-                        <SkillGroup key={i} group={group} defaultOpen={i === 0} delay={i * 0.07} />
-                    ))}
-                </div>
-            </div>
+                {/* Radar Chart Intelligence Stack */}
+                <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="bento-span-2 card p-8 bg-[var(--card)] border border-[var(--border)] overflow-hidden flex flex-col justify-center"
+                >
+                    <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                            <Brain size={20} className="text-[var(--accent)]" />
+                            <h3 className="text-lg font-bold">Signal Profile</h3>
+                        </div>
+                    </div>
+                    <RadarChart />
+                </motion.div>
 
-            {/* Certifications — compact horizontal chips with links */}
-            <div>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#94A3B8', marginBottom: 14 }}>
-                    Certifications
-                </p>
-                <div className="cert-row">
-                    {certifications.map((cert, i) => (
-                        <motion.a key={cert.id}
-                            href={cert.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            initial={{ opacity: 0, scale: 0.92 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.3, delay: i * 0.07 }}
-                            className="cert-chip"
-                            style={{ textDecoration: 'none' }}
-                        >
-                            <Award size={14} style={{ color: ACCENT, flexShrink: 0 }} />
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                <span>
-                                    <strong style={{ color: TEXT, fontWeight: 600, fontSize: 13 }}>{cert.title}</strong>
-                                    <span style={{ color: '#94A3B8', fontSize: 12 }}> · {cert.issuer}</span>
-                                </span>
-                                {cert.image && <ImageIcon size={12} style={{ color: '#CBD5E1' }} />}
+                {/* Essential Gauges */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bento-span-2 card p-8 glass flex flex-col gap-6"
+                >
+                    <div className="flex items-center gap-3 mb-2">
+                        <Award size={20} className="text-[var(--accent)]" />
+                        <h3 className="text-lg font-bold">Core Competencies</h3>
+                    </div>
+                    <SkillGauge label="Vector Calculus / Stats" level={88} />
+                    <SkillGauge label="System Architecture" level={82} />
+                    <SkillGauge label="Scientific Writing" level={90} />
+                </motion.div>
+
+                {/* Education Box */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bento-span-2 card p-8 bg-gradient-to-br from-[var(--bg)] to-[var(--card)]"
+                >
+                    <div className="flex items-center gap-3 mb-6">
+                        <GraduationCap size={20} className="text-[var(--accent)]" />
+                        <h3 className="text-lg font-bold">Academic Base</h3>
+                    </div>
+                    {education.map((edu) => (
+                        <div key={edu.id} className="relative pl-6 border-l border-[var(--border)]">
+                            <span className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-[var(--accent)]" />
+                            <h4 className="text-md font-bold mb-1">{edu.degree}</h4>
+                            <p className="text-sm text-[var(--accent)] font-semibold mb-2">{edu.institution}</p>
+                            <p className="text-xs text-[var(--text2)] leading-relaxed">{edu.description}</p>
+                            <div className="mt-4 inline-block text-[10px] font-bold text-[var(--muted)] border border-[var(--border-2)] px-2 py-1 rounded-md uppercase tracking-wider">
+                                {edu.period}
                             </div>
-                        </motion.a>
+                        </div>
                     ))}
-                </div>
+                </motion.div>
+
+                {/* Certifications - Wide Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bento-span-4 card p-8 glass-accent border border-indigo-500/10"
+                >
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-3">
+                            <Award size={20} className="text-[var(--accent)]" />
+                            <h3 className="text-lg font-bold text-indigo-300">Credentials & Validation</h3>
+                        </div>
+                        <span className="text-xs font-mono text-[var(--muted)]">{certifications.length} SYMBOLS</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {certifications.map((cert) => (
+                            <a
+                                key={cert.id}
+                                href={cert.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group flex items-center gap-4 p-4 rounded-xl glass border border-[var(--border-2)] hover:border-[var(--accent)] transition-all bg-white/5"
+                            >
+                                <div className="p-2.5 rounded-lg bg-[var(--bg)] text-[var(--accent)] group-hover:scale-110 transition-transform shadow-lg">
+                                    <Award size={18} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <h4 className="text-sm font-bold truncate transition-colors">{cert.title}</h4>
+                                    <p className="text-[10px] text-[var(--muted)] font-bold uppercase tracking-widest">{cert.issuer}</p>
+                                </div>
+                                <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--accent)]" />
+                            </a>
+                        ))}
+                    </div>
+                </motion.div>
+
             </div>
         </div>
     </section>
