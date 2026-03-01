@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { achievements } from '../constants/data';
-import { Award, Zap, Trophy, ExternalLink } from 'lucide-react';
+import { Award, Zap, Trophy, ExternalLink, Activity, Code } from 'lucide-react';
 
 const Achievements = () => {
     return (

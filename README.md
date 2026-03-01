@@ -88,7 +88,7 @@ My journey into **Artificial Intelligence** at **Kathmandu University** is more 
   <p>Kathmandu, Nepal | shovagelal392@gmail.com</p>
   <p>
     <a href="https://linkedin.com/in/shova-gelal"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-    <a href="https://github.com/shovagelal"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+    <a href="https://github.com/shova33"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
   </p>
 </div>
 

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { experience } from '../constants/data';
-import { Briefcase, Calendar, ExternalLink } from 'lucide-react';
+import { Briefcase, Calendar, ExternalLink, Award } from 'lucide-react';
 
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 20 },

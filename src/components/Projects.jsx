@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { projects } from '../constants/data';
-import { ExternalLink, Github, ArrowRight, Music, Activity, Cpu, Lightbulb } from 'lucide-react';
+import { ExternalLink, Github, ArrowRight, Music, Activity, Cpu, Lightbulb, Mic, Globe } from 'lucide-react';
 
 const Waveform = () => (
     <div className="flex items-center gap-1 h-8">

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { leadership } from '../constants/data';
-import { ChevronDown, Users, ExternalLink, Globe } from 'lucide-react';
+import { ChevronDown, Users, ExternalLink, Globe, Zap, Mic, BookOpen, Heart, Award } from 'lucide-react';
 
 const LeadershipCard = ({ item, delay = 0 }) => {
     const [open, setOpen] = useState(false);
