@@ -12,21 +12,25 @@ const Navbar = () => {
     }, []);
 
     const links = [
+        { name: 'Home', href: '#home' },
         { name: 'About', href: '#about' },
         { name: 'Skills', href: '#skills' },
         { name: 'Projects', href: '#projects' },
-        { name: 'Community', href: '#community' },
+        { name: 'Experience', href: '#experience' },
+        { name: 'Volunteering', href: '#volunteering' },
+        { name: 'Achievements', href: '#achievements' },
     ];
 
     return (
         <nav className={`fixed top-0 w-full z-[100] transition-all duration-300 ${isScrolled ? 'glass py-4 shadow-xl' : 'bg-transparent py-6'}`}>
             <div className="container flex items-center justify-between">
                 {/* Logo */}
-                <a href="#about" className="text-2xl font-black tracking-tighter hover:scale-105 transition-transform">
+                <a href="#home" className="text-2xl font-black tracking-tighter hover:scale-105 transition-transform">
                     <span className="text-[var(--accent)]">S</span>
                     <span className="text-[var(--text)]">HOVA</span>
                     <span className="text-[var(--accent)]">.</span>
                 </a>
+
 
                 {/* Desktop nav */}
                 <div className="hidden md:flex items-center gap-10">

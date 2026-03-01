@@ -156,11 +156,11 @@ const ContactForm = () => {
                         >
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-                                <span className="text-xs font-bold text-emerald-400">AVAILABLE FOR RESEARCH</span>
+                                <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest">Available for Innovation</span>
                             </div>
                             <p className="text-xs text-[var(--text2)] leading-relaxed">
-                                Currently evaluating AI / ML / Data Science internship opportunities for 2025.
-                                Open to collaborative technical research and engineering projects.
+                                Currently exploring AI/ML/Software Engineering opportunities for 2025.
+                                Open to discussing project collaborations, hackathon teams, and technical research.
                             </p>
                         </motion.div>
                     </div>
@@ -174,17 +174,18 @@ const ContactForm = () => {
                             HOVA
                             <span className="text-[var(--accent)]">.</span>
                         </p>
-                        <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-[0.2em]">Signal Over Noise</p>
+                        <p className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-[0.3em]">Building Intelligence for Good</p>
                     </div>
 
-                    <div className="flex flex-col md:flex-end text-center md:text-right">
-                        <p className="text-sm font-bold opacity-80 mb-2">AI & Data Science @ Kathmandu University</p>
-                        <p className="text-xs text-[var(--muted)]">© 2025 Shova Gelal. Artifacts & Engine: Vercel + React.</p>
+                    <div className="flex flex-col md:items-end text-center md:text-right">
+                        <p className="text-sm font-bold opacity-80 mb-2">B.Tech in AI @ Kathmandu University</p>
+                        <p className="text-[10px] text-[var(--muted)] uppercase tracking-widest">© 2025 Shova Gelal • Designed for Impact</p>
                     </div>
                 </div>
             </div>
         </section>
     );
 };
+
 
 export default ContactForm;
