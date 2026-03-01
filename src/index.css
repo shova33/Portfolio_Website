@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Poppins:wght@600;700;800&display=swap');
+@import "tailwindcss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #FAFAFA;
+  --bg-alt: #F5F3FF;
+  --card: #FFFFFF;
+  --border: #EDE9FE;
+  --border-2: #E2E8F0;
+  --accent: #7C3AED;
+  --accent-d: #5B21B6;
+  --accent-l: #EDE9FE;
+  --accent-m: #DDD6FE;
+  --text: #0F172A;
+  --text2: #475569;
+  --muted: #94A3B8;
+  --shadow-sm: 0 1px 6px rgba(124, 58, 237, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 20px rgba(124, 58, 237, 0.09), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 12px 40px rgba(124, 58, 237, 0.13), 0 4px 12px rgba(0, 0, 0, 0.07);
+  --radius: 14px;
+  --radius-lg: 20px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.2;
+}
+
+/* ── Layout helpers ──────────────────────────────────────── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.section-alt {
+  background-color: var(--bg-alt);
+}
+
+/* ── Typography helpers ──────────────────────────────────── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-l);
+  padding: 4px 14px;
+  border-radius: 99px;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.section-title-lg {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.section-bar {
+  width: 48px;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  margin-bottom: 44px;
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.22s ease, transform 0.22s ease, border-color 0.22s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border);
+  transform: translateY(-3px);
+}
+
+.card-flat {
+  background: var(--card);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+}
+
+/* ── Accent card (PRIMARY sections) ─────────────────────── */
+.card-accent-left {
+  border-left: 3px solid var(--accent);
+}
+
+/* ── Tags & pills ────────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 99px;
+  background: var(--accent-l);
+  color: var(--accent-d);
+  border: 1px solid var(--border);
+  letter-spacing: 0.03em;
+}
+
+.tag-gray {
+  background: #F1F5F9;
+  color: var(--text2);
+  border: 1px solid var(--border-2);
+}
+
+/* ── Responsive contact ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .skills-meta-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Collapsible ─────────────────────────────────────────── */
+.collapsible-content {
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.collapsible-content.open {
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.collapsible-content.closed {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* ── Compact horizontal cert row ────────────────────────── */
+.cert-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cert-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-2);
+  background: var(--card);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  transition: all 0.2s;
+  cursor: default;
+  box-shadow: var(--shadow-sm);
+}
+
+.cert-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-l);
+}
